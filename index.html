@@ -109,6 +109,59 @@
                     </div>
                 </div>
 
+                <!-- CONTROL DE ORIENTACIÓN (VERTICAL VS HORIZONTAL) -->
+                <div class="bg-[#172316] p-4 rounded-xl border border-[#2c3f2b] space-y-3">
+                    <h3 class="text-xs font-bold text-[#eaf1dc] uppercase tracking-wider flex items-center gap-1.5">
+                        📐 Orientación Etiqueta Trasera
+                    </h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="setLabelOrientation('vertical')" id="btnOrientVertical" class="p-2.5 text-xs font-bold rounded-lg text-center transition-all bg-[#243823] text-white border border-[#344d33] flex flex-col items-center gap-1">
+                            <span>↕️</span>
+                            <span>Vertical (11x18cm)</span>
+                        </button>
+                        <button onclick="setLabelOrientation('horizontal')" id="btnOrientHorizontal" class="p-2.5 text-xs font-bold rounded-lg text-center transition-all bg-[#0d130d] text-slate-400 border border-[#152014] flex flex-col items-center gap-1">
+                            <span>↔️</span>
+                            <span>Horizontal (18x11cm)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN: DIMENSIONES PERSONALIZADAS -->
+                <div class="bg-[#172316] p-4 rounded-xl border border-[#2c3f2b] space-y-3">
+                    <h3 class="text-xs font-bold text-[#eaf1dc] uppercase tracking-wider flex items-center gap-1.5 font-title">
+                        📐 Medidas Personalizadas (cm)
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <!-- Diámetro Frontal -->
+                        <div>
+                            <div class="flex justify-between text-[11px] font-medium text-slate-300 mb-1">
+                                <label for="inputFrontDiameter">Diámetro Logo Frente:</label>
+                                <span id="lblFrontDiameterIndicator" class="text-[#a3d99b] font-bold">10.5 cm</span>
+                            </div>
+                            <input type="range" id="inputFrontDiameter" min="6" max="15" step="0.5" value="10.5" oninput="updateDimensions()" class="w-full h-1.5 bg-[#0d130d] rounded-lg appearance-none cursor-pointer accent-[#243823]">
+                        </div>
+
+                        <!-- Ancho Etiqueta Trasera -->
+                        <div>
+                            <div class="flex justify-between text-[11px] font-medium text-slate-300 mb-1">
+                                <label for="inputBackWidth">Ancho Etiqueta Trasera:</label>
+                                <span id="lblBackWidthIndicator" class="text-[#a3d99b] font-bold">11 cm</span>
+                            </div>
+                            <input type="range" id="inputBackWidth" min="8" max="25" step="0.5" value="11" oninput="updateDimensions()" class="w-full h-1.5 bg-[#0d130d] rounded-lg appearance-none cursor-pointer accent-[#243823]">
+                        </div>
+
+                        <!-- Alto Etiqueta Trasera -->
+                        <div>
+                            <div class="flex justify-between text-[11px] font-medium text-slate-300 mb-1">
+                                <label for="inputBackHeight">Alto Etiqueta Trasera:</label>
+                                <span id="lblBackHeightIndicator" class="text-[#a3d99b] font-bold">18 cm</span>
+                            </div>
+                            <input type="range" id="inputBackHeight" min="8" max="25" step="0.5" value="18" oninput="updateDimensions()" class="w-full h-1.5 bg-[#0d130d] rounded-lg appearance-none cursor-pointer accent-[#243823]">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- SUBIDA DE LOGOTIPO -->
                 <div class="bg-[#172316] p-4 rounded-xl border border-[#2c3f2b] space-y-3">
                     <h3 class="text-xs font-bold text-[#eaf1dc] uppercase tracking-wider flex items-center gap-2">
@@ -227,8 +280,12 @@
                         <textarea id="inputBenefits" oninput="syncAndRender()" rows="3" class="w-full text-xs p-2 bg-[#090f09] border border-[#233521] rounded-lg text-white">Una bebida viva, elaborada artesanalmente con fermentación natural. Aporta probióticos que cuidan de tu digestión de forma refrescante y 100% natural. ¡Siente la ligereza en cada trago!</textarea>
                     </div>
                     <div>
+                        <label class="block text-[11px] font-medium text-slate-300 mb-1">Modo de Uso</label>
+                        <textarea id="inputUsage" oninput="syncAndRender()" rows="2" class="w-full text-xs p-2 bg-[#090f09] border border-[#233521] rounded-lg text-white">Disfruta bien frío. Ideal por las mañanas en ayunas o para acompañar tus comidas diarias.</textarea>
+                    </div>
+                    <div>
                         <label class="block text-[11px] font-medium text-slate-300 mb-1">Conservación</label>
-                        <input type="text" id="inputConservation" oninput="syncAndRender()" value="Manténgase siempre en refrigeración (2°C a 6°C). No agitar antes de abrir." class="w-full text-xs p-2 bg-[#090f09] border border-[#233521] rounded-lg text-white">
+                        <input type="text" id="inputConservation" oninput="syncAndRender()" value="Manténgase siempre en refrigeración (2°C a 6°C) para conservar sus propiedades vivas. No agitar antes de abrir." class="w-full text-xs p-2 bg-[#090f09] border border-[#233521] rounded-lg text-white">
                     </div>
                 </div>
 
@@ -247,12 +304,12 @@
                 
                 <div class="flex flex-col md:flex-row items-center justify-center gap-10 py-4">
                     
-                    <!-- PARTE A: LOGOTIPO FRONTAL CIRCULAR (Diámetro físico real: 10.5cm) -->
+                    <!-- PARTE A: LOGOTIPO FRONTAL CIRCULAR -->
                     <div class="flex flex-col items-center gap-3">
                         <div id="containerLogoFront" class="relative flex flex-col items-center justify-center shadow-2xl rounded-full" style="width: 10.5cm; height: 10.5cm; min-width: 10.5cm; min-height: 10.5cm;">
                             
                             <!-- Guía de corte circular -->
-                            <div class="absolute -top-4 text-[9px] text-[#a3d99b] font-mono">✂️ Guía de corte circular (Frente - 10.5cm)</div>
+                            <div id="lblFrontGuideline" class="absolute -top-4 text-[9px] text-[#a3d99b] font-mono whitespace-nowrap">✂️ Guía de corte circular (Frente - 10.5cm)</div>
                             
                             <!-- Logotipo circular completo con fondo de pergamino dinámico -->
                             <div id="circleLabelBg" class="w-full h-full rounded-full p-1 border-4 border-[#2b1911]/15 overflow-hidden shadow-inner flex items-center justify-center relative parchment-botanical">
@@ -357,15 +414,15 @@
                         </button>
                     </div>
 
-                    <!-- PARTE B: ETIQUETA TRASERA RECTANGULAR (Ancho: 11cm x Alto: 18cm) -->
+                    <!-- PARTE B: ETIQUETA TRASERA RECTANGULAR -->
                     <div class="flex flex-col items-center gap-3">
-                        <div id="containerLabelBack" class="relative flex flex-col shadow-2xl" style="width: 11cm; height: 18cm; min-width: 11cm; min-height: 18cm;">
+                        <div id="containerLabelBack" class="relative flex flex-col shadow-2xl transition-all duration-300" style="width: 11cm; height: 18cm; min-width: 11cm; min-height: 18cm;">
                             
                             <!-- Guía de corte trasera -->
-                            <div class="absolute -top-4 text-[9px] text-[#a3d99b] font-mono">✂️ Guía de corte trasera (11x18cm)</div>
+                            <div id="lblBackGuideline" class="absolute -top-4 text-[9px] text-[#a3d99b] font-mono whitespace-nowrap">✂️ Guía de corte trasera (11x18cm)</div>
                             
                             <!-- Contenedor con textura rústica o minimalista dinámica -->
-                            <div id="backLabelBg" class="parchment-botanical w-full h-full p-4.5 flex flex-col justify-between text-[#2d1a10] relative border-4 border-[#2d1a10]/80 shadow-inner overflow-hidden transition-all">
+                            <div id="backLabelBg" class="parchment-botanical w-full h-full p-4.5 flex flex-col justify-between text-[#2d1a10] relative border-4 border-[#2d1a10]/80 shadow-inner overflow-hidden transition-all duration-300">
                                 
                                 <!-- Ilustración floral rústica superior izquierda (Se oculta/cambia en minimalista) -->
                                 <div id="backFlowerTL" class="absolute top-1.5 left-1.5 w-12 h-12 pointer-events-none opacity-95">
@@ -389,155 +446,160 @@
                                 <div id="backFrameInner" class="absolute top-3.5 left-3.5 right-3.5 bottom-3.5 border border-[#2d1a10]/30 rounded-md pointer-events-none transition-all"></div>
 
                                 <!-- CONTENIDO INTERNO DE LA TRASERA -->
-                                <div class="z-10 flex flex-col justify-between h-full pt-4.5">
+                                <div id="backContentWrapper" class="z-10 flex flex-col justify-between h-full pt-4.5">
                                     
-                                    <!-- Declaración Nutricional -->
-                                    <div>
-                                        <h3 class="text-center font-title font-bold text-xs tracking-widest text-[#2d1a10] mt-1.5" id="lblTitleNutri">DECLARACIÓN NUTRICIONAL</h3>
-                                        
-                                        <div class="w-full h-[3px] border-y border-[#2d1a10]/50 my-1"></div>
-                                        
-                                        <div class="text-[9px] font-body flex justify-between px-1.5 mb-1 text-[#4a2e1e]">
-                                            <span><strong>PORCIÓN:</strong> <span id="lblPortion">250 ml</span></span>
-                                            <span><strong>PORCIONES POR ENVASE:</strong> <span id="lblPortionsPer">4</span></span>
+                                    <!-- COLUMNA 1 (Izquierda en Horizontal, Superior en Vertical) -->
+                                    <div id="backSectionLeft" class="flex flex-col justify-between">
+                                        <!-- Declaración Nutricional -->
+                                        <div>
+                                            <h3 class="text-center font-title font-bold text-xs tracking-widest text-[#2d1a10] mt-1.5" id="lblTitleNutri">DECLARACIÓN NUTRICIONAL</h3>
+                                            
+                                            <div class="w-full h-[3px] border-y border-[#2d1a10]/50 my-1"></div>
+                                            
+                                            <div class="text-[9px] font-body flex justify-between px-1.5 mb-1 text-[#4a2e1e]">
+                                                <span><strong>PORCIÓN:</strong> <span id="lblPortion">250 ml</span></span>
+                                                <span><strong>PORCIONES POR ENVASE:</strong> <span id="lblPortionsPer">4</span></span>
+                                            </div>
+
+                                            <!-- Tabla Nutrimental -->
+                                            <div class="border border-[#2d1a10] rounded overflow-hidden text-[8.5px] font-body bg-[#fcfaf4]/50">
+                                                <div class="grid grid-cols-12 bg-[#2d1a10]/5 border-b border-[#2d1a10] px-1.5 py-1">
+                                                    <div class="col-span-8 font-bold">Contenido Energético por porción</div>
+                                                    <div class="col-span-4 text-right font-bold" id="lblKcal">37.5 kcal (157.5 kJ)</div>
+                                                </div>
+                                                <div class="grid grid-cols-12 border-b border-[#2d1a10]/50 px-1.5 py-0.5">
+                                                    <div class="col-span-8">Proteínas</div>
+                                                    <div class="col-span-4 text-right" id="lblProtein">0 g</div>
+                                                </div>
+                                                <div class="grid grid-cols-12 border-b border-[#2d1a10]/50 px-1.5 py-0.5">
+                                                    <div class="col-span-8">Grasas Totales</div>
+                                                    <div class="col-span-4 text-right" id="lblFats">0 g</div>
+                                                </div>
+                                                <div class="grid grid-cols-12 border-b border-[#2d1a10]/50 px-1.5 py-0.5">
+                                                    <div class="col-span-8 font-bold">Hidratos de Carbono Disponibles</div>
+                                                    <div class="col-span-4 text-right font-bold" id="lblCarbs">9.5 g</div>
+                                                </div>
+                                                <div class="grid grid-cols-12 border-b border-[#2d1a10]/30 px-1.5 py-0.5 pl-3 italic text-[#5c3e2e]">
+                                                    <div class="col-span-8">Azúcares Residuales (1)</div>
+                                                    <div class="col-span-4 text-right" id="lblSugars">7.5 g</div>
+                                                </div>
+                                                <div class="grid grid-cols-12 px-1.5 py-0.5">
+                                                    <div class="col-span-8 font-bold">Sodio</div>
+                                                    <div class="col-span-4 text-right font-bold" id="lblSodium">12.5 mg</div>
+                                                </div>
+                                            </div>
+                                            <p class="text-[7px] italic font-body opacity-90 mt-1 px-1 leading-tight text-[#4a2e1e]">
+                                                (1) Consumidos por el cultivo durante la fermentación natural de la Jamaica & Menta.
+                                            </p>
                                         </div>
 
-                                        <!-- Tabla Nutrimental -->
-                                        <div class="border border-[#2d1a10] rounded overflow-hidden text-[8.5px] font-body bg-[#fcfaf4]/50">
-                                            <div class="grid grid-cols-12 bg-[#2d1a10]/5 border-b border-[#2d1a10] px-1.5 py-1">
-                                                <div class="col-span-8 font-bold">Contenido Energético por porción</div>
-                                                <div class="col-span-4 text-right font-bold" id="lblKcal">37.5 kcal (157.5 kJ)</div>
-                                            </div>
-                                            <div class="grid grid-cols-12 border-b border-[#2d1a10]/50 px-1.5 py-0.5">
-                                                <div class="col-span-8">Proteínas</div>
-                                                <div class="col-span-4 text-right" id="lblProtein">0 g</div>
-                                            </div>
-                                            <div class="grid grid-cols-12 border-b border-[#2d1a10]/50 px-1.5 py-0.5">
-                                                <div class="col-span-8">Grasas Totales</div>
-                                                <div class="col-span-4 text-right" id="lblFats">0 g</div>
-                                            </div>
-                                            <div class="grid grid-cols-12 border-b border-[#2d1a10]/50 px-1.5 py-0.5">
-                                                <div class="col-span-8 font-bold">Hidratos de Carbono Disponibles</div>
-                                                <div class="col-span-4 text-right font-bold" id="lblCarbs">9.5 g</div>
-                                            </div>
-                                            <div class="grid grid-cols-12 border-b border-[#2d1a10]/30 px-1.5 py-0.5 pl-3 italic text-[#5c3e2e]">
-                                                <div class="col-span-8">Azúcares Residuales (1)</div>
-                                                <div class="col-span-4 text-right" id="lblSugars">7.5 g</div>
-                                            </div>
-                                            <div class="grid grid-cols-12 px-1.5 py-0.5">
-                                                <div class="col-span-8 font-bold">Sodio</div>
-                                                <div class="col-span-4 text-right font-bold" id="lblSodium">12.5 mg</div>
-                                            </div>
+                                        <!-- Ingredientes -->
+                                        <div class="my-1.5 px-1 text-[8px] font-body">
+                                            <p class="leading-relaxed text-justify">
+                                                <strong>Ingredientes:</strong> <span id="lblIngredients">Agua filtrada, cultivo de tibicos, azúcar de caña integral (consumida en la fermentación), flor de Jamaica deshidratada e infusión de menta fresca.</span>
+                                            </p>
+                                            <p class="text-[7.5px] font-bold mt-0.5 text-[#b0212a] uppercase tracking-wide">
+                                                Naturalmente libre de lácteos, gluten y conservadores.
+                                            </p>
                                         </div>
-                                        <p class="text-[7px] italic font-body opacity-90 mt-1 px-1 leading-tight text-[#4a2e1e]">
-                                            (1) Consumidos por el cultivo durante la fermentación natural de la Jamaica & Menta.
-                                        </p>
                                     </div>
 
-                                    <!-- Ingredientes -->
-                                    <div class="my-1.5 px-1 text-[8px] font-body">
-                                        <p class="leading-relaxed text-justify">
-                                            <strong>Ingredientes:</strong> <span id="lblIngredients">Agua filtrada, cultivo de tibicos, azúcar de caña integral (consumida en la fermentación), flor de Jamaica deshidratada e infusión de menta fresca.</span>
-                                        </p>
-                                        <p class="text-[7.5px] font-bold mt-0.5 text-[#b0212a] uppercase tracking-wide">
-                                            Naturalmente libre de lácteos, gluten y conservadores.
-                                        </p>
-                                    </div>
-
-                                    <!-- Divisor decorativo -->
+                                    <!-- Divisor decorativo (Se oculta en modo Horizontal) -->
                                     <div id="backDivisor" class="flex items-center justify-center gap-2 opacity-50 my-0.5">
                                         <div class="h-[1px] bg-[#2d1a10] w-12"></div>
                                         <span class="text-xs">❦</span>
                                         <div class="h-[1px] bg-[#2d1a10] w-12"></div>
                                     </div>
 
-                                    <!-- Beneficios -->
-                                    <div class="text-center px-1.5">
-                                        <h4 class="font-title font-bold text-[8.5px] tracking-widest text-[#2d1a10] mb-0.5" id="lblTitleBenefits">❦ BENEFICIOS DEL KÉFIR ❦</h4>
-                                        <p class="font-title italic text-[8.5px] font-semibold text-[#b0212a]" id="lblMotto">"Abraza tu bienestar desde adentro"</p>
-                                        <p class="font-body text-[8px] text-justify leading-relaxed mt-0.5" id="lblBenefits">
-                                            Una bebida viva, elaborada artesanalmente con fermentación natural. Aporta probióticos que cuidan de tu digestión de forma refrescante y 100% natural. ¡Siente la ligereza en cada trago!
-                                        </p>
-                                    </div>
+                                    <!-- COLUMNA 2 (Derecha en Horizontal, Inferior en Vertical) -->
+                                    <div id="backSectionRight" class="flex flex-col justify-between">
+                                        <!-- Beneficios -->
+                                        <div class="text-center px-1.5">
+                                            <h4 class="font-title font-bold text-[8.5px] tracking-widest text-[#2d1a10] mb-0.5" id="lblTitleBenefits">❦ BENEFICIOS DEL KÉFIR ❦</h4>
+                                            <p class="font-title italic text-[8.5px] font-semibold text-[#b0212a]" id="lblMotto">"Abraza tu bienestar desde adentro"</p>
+                                            <p class="font-body text-[8px] text-justify leading-relaxed mt-0.5" id="lblBenefits">
+                                                Una bebida viva, elaborada artesanalmente con fermentación natural. Aporta probióticos que cuidan de tu digestión de forma refrescante y 100% natural. ¡Siente la ligereza en cada trago!
+                                            </p>
+                                        </div>
 
-                                    <!-- Modo de Uso y Conservación -->
-                                    <div class="grid grid-cols-2 gap-2 my-1 bg-[#2d1a10]/5 p-2 rounded-lg border border-[#2d1a10]/15">
-                                        <div class="flex items-start gap-1 text-[7.5px] font-body">
-                                            <!-- Vaso rústico -->
-                                            <svg class="w-5.5 h-5.5 text-[#2d1a10] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                                <path d="M6 3h12l-2 17H8L6 3z" stroke-linecap="round"/>
-                                                <circle cx="10" cy="14" r="1"/>
-                                                <circle cx="14" cy="16" r="1"/>
-                                            </svg>
-                                            <div>
-                                                <strong class="uppercase text-[7px] text-[#b0212a] block tracking-wide">Disfrutar</strong>
-                                                <span>Bien frío por las mañanas.</span>
+                                        <!-- Modo de Uso y Conservación -->
+                                        <div class="grid grid-cols-2 gap-3 my-2 bg-[#2d1a10]/5 p-2 rounded-lg border border-[#2d1a10]/15">
+                                            <div class="flex items-start gap-1.5 text-[7.5px] font-body">
+                                                <svg class="w-4 h-4 text-[#2d1a10] flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M6 3h12l-2 17H8L6 3z" stroke-linecap="round"/>
+                                                    <circle cx="10" cy="14" r="1"/>
+                                                    <circle cx="14" cy="16" r="1"/>
+                                                </svg>
+                                                <div class="leading-tight">
+                                                    <strong class="uppercase text-[7px] text-[#b0212a] block tracking-wide font-bold mb-0.5">Modo de Uso</strong>
+                                                    <span id="lblUsage">Disfruta bien frío. Ideal por las mañanas en ayunas o para acompañar tus comidas diarias.</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex items-start gap-1.5 text-[7.5px] font-body">
+                                                <svg class="w-4 h-4 text-[#2d1a10] flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="7" y="2" width="10" height="20" rx="1.5"/>
+                                                    <line x1="7" y1="11" x2="17" y2="11"/>
+                                                </svg>
+                                                <div class="leading-tight">
+                                                    <strong class="uppercase text-[7px] text-[#b0212a] block tracking-wide font-bold mb-0.5">Conservación</strong>
+                                                    <span id="lblConservation">Manténgase siempre en refrigeración (2°C a 6°C) para conservar sus propiedades vivas. No agitar antes de abrir.</span>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="flex items-start gap-1 text-[7.5px] font-body">
-                                            <!-- Refrigeración -->
-                                            <svg class="w-5.5 h-5.5 text-[#2d1a10] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                                <rect x="7" y="2" width="10" height="20" rx="1.5"/>
-                                                <line x1="7" y1="11" x2="17" y2="11"/>
-                                            </svg>
-                                            <div>
-                                                <strong class="uppercase text-[7px] text-[#b0212a] block tracking-wide">Conservación</strong>
-                                                <span id="lblConservation">Refrigeración (2°C a 6°C). No agitar antes de abrir.</span>
+                                        <!-- Pie de Etiqueta con espacio de sellado y CÓDIGO DE BARRAS -->
+                                        <div class="border-t border-[#2d1a10]/30 pt-1 mt-1 z-10 flex items-center justify-between">
+                                            <div class="text-left font-body">
+                                                <p class="text-[7px] font-bold text-[#2d1a10]/90">Hecho localmente en Ciudad Juárez.</p>
+                                                <div class="mt-0.5 flex items-center gap-1.5 border border-[#2d1a10]/20 rounded px-1.5 py-0.5 bg-[#fbf8f0]/80">
+                                                    <span class="text-[6px] uppercase font-bold text-[#b0212a]">Lote y Fecha:</span>
+                                                    <div class="w-12 h-2 border-b border-dashed border-[#2d1a10]/40"></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
 
-                                    <!-- Ilustración floral rústica en las esquinas inferiores -->
-                                    <div id="backFlowerBL" class="absolute bottom-1.5 left-1.5 w-12 h-12 pointer-events-none opacity-95 scale-y-[-1]">
-                                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M30 40C20 45 15 55 25 75C40 95 65 75 65 70C65 70 55 60 45 50" fill="#b0212a" stroke="#1d0a04" stroke-width="1.5" />
-                                            <path d="M15 25C25 15 45 15 55 35" fill="#476d3b" stroke="#1d0a04" stroke-width="1.5" opacity="0.9" />
-                                            <circle cx="35" cy="45" r="4" fill="#e0c158" stroke="#1d0a04" stroke-width="1" />
-                                        </svg>
-                                    </div>
-                                    <div id="backFlowerBR" class="absolute bottom-1.5 right-1.5 w-12 h-12 pointer-events-none scale-x-[-1] scale-y-[-1] opacity-95">
-                                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M30 40C20 45 15 55 25 75C40 95 65 75 65 70C65 70 55 60 45 50" fill="#b0212a" stroke="#1d0a04" stroke-width="1.5" />
-                                            <path d="M15 25C25 15 45 15 55 35" fill="#476d3b" stroke="#1d0a04" stroke-width="1.5" opacity="0.9" />
-                                            <circle cx="35" cy="45" r="4" fill="#e0c158" stroke="#1d0a04" stroke-width="1" />
-                                        </svg>
-                                    </div>
-
-                                    <!-- Pie de Etiqueta con espacio de sellado y CÓDIGO DE BARRAS -->
-                                    <div class="border-t border-[#2d1a10]/30 pt-1 mt-1 z-10 flex items-center justify-between">
-                                        <div class="text-left font-body">
-                                            <p class="text-[7px] font-bold text-[#2d1a10]/90">Hecho localmente en Ciudad Juárez.</p>
-                                            <div class="mt-0.5 flex items-center gap-1.5 border border-[#2d1a10]/20 rounded px-1.5 py-0.5 bg-[#fbf8f0]/80">
-                                                <span class="text-[6px] uppercase font-bold text-[#b0212a]">Lote y Fecha:</span>
-                                                <div class="w-12 h-2 border-b border-dashed border-[#2d1a10]/40"></div>
+                                            <!-- Código de Barras de Simulación -->
+                                            <div class="bg-white border border-gray-400 p-0.5 rounded flex flex-col items-center justify-center w-14 h-7">
+                                                <svg class="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                                    <rect x="5" y="0" width="3" height="34" fill="black"/>
+                                                    <rect x="12" y="0" width="1" height="34" fill="black"/>
+                                                    <rect x="15" y="0" width="4" height="34" fill="black"/>
+                                                    <rect x="22" y="0" width="2" height="34" fill="black"/>
+                                                    <rect x="28" y="0" width="1" height="34" fill="black"/>
+                                                    <rect x="32" y="0" width="3" height="34" fill="black"/>
+                                                    <rect x="40" y="0" width="5" height="34" fill="black"/>
+                                                    <rect x="48" y="0" width="2" height="34" fill="black"/>
+                                                    <rect x="54" y="0" width="1" height="34" fill="black"/>
+                                                    <rect x="60" y="0" width="4" height="34" fill="black"/>
+                                                    <rect x="68" y="0" width="2" height="34" fill="black"/>
+                                                    <rect x="74" y="0" width="1" height="34" fill="black"/>
+                                                    <rect x="80" y="0" width="3" height="34" fill="black"/>
+                                                    <rect x="88" y="0" width="4" height="34" fill="black"/>
+                                                    <rect x="94" y="0" width="2" height="34" fill="black"/>
+                                                </svg>
+                                                <span class="text-[5px] font-mono tracking-wider text-black mt-0.5">750100412345</span>
                                             </div>
-                                        </div>
-
-                                        <!-- Código de Barras de Simulación -->
-                                        <div class="bg-white border border-gray-400 p-0.5 rounded flex flex-col items-center justify-center w-14 h-7">
-                                            <svg class="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
-                                                <rect x="5" y="0" width="3" height="34" fill="black"/>
-                                                <rect x="12" y="0" width="1" height="34" fill="black"/>
-                                                <rect x="15" y="0" width="4" height="34" fill="black"/>
-                                                <rect x="22" y="0" width="2" height="34" fill="black"/>
-                                                <rect x="28" y="0" width="1" height="34" fill="black"/>
-                                                <rect x="32" y="0" width="3" height="34" fill="black"/>
-                                                <rect x="40" y="0" width="5" height="34" fill="black"/>
-                                                <rect x="48" y="0" width="2" height="34" fill="black"/>
-                                                <rect x="54" y="0" width="1" height="34" fill="black"/>
-                                                <rect x="60" y="0" width="4" height="34" fill="black"/>
-                                                <rect x="68" y="0" width="2" height="34" fill="black"/>
-                                                <rect x="74" y="0" width="1" height="34" fill="black"/>
-                                                <rect x="80" y="0" width="3" height="34" fill="black"/>
-                                                <rect x="88" y="0" width="4" height="34" fill="black"/>
-                                                <rect x="94" y="0" width="2" height="34" fill="black"/>
-                                            </svg>
-                                            <span class="text-[5px] font-mono tracking-wider text-black mt-0.5">750100412345</span>
                                         </div>
                                     </div>
 
                                 </div>
+                                
+                                <!-- Ilustración floral rústica en las esquinas inferiores (Se ocultan/adaptan dinámicamente) -->
+                                <div id="backFlowerBL" class="absolute bottom-1.5 left-1.5 w-12 h-12 pointer-events-none opacity-95 scale-y-[-1]">
+                                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M30 40C20 45 15 55 25 75C40 95 65 75 65 70C65 70 55 60 45 50" fill="#b0212a" stroke="#1d0a04" stroke-width="1.5" />
+                                        <path d="M15 25C25 15 45 15 55 35" fill="#476d3b" stroke="#1d0a04" stroke-width="1.5" opacity="0.9" />
+                                        <circle cx="35" cy="45" r="4" fill="#e0c158" stroke="#1d0a04" stroke-width="1" />
+                                    </svg>
+                                </div>
+                                <div id="backFlowerBR" class="absolute bottom-1.5 right-1.5 w-12 h-12 pointer-events-none scale-x-[-1] scale-y-[-1] opacity-95">
+                                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M30 40C20 45 15 55 25 75C40 95 65 75 65 70C65 70 55 60 45 50" fill="#b0212a" stroke="#1d0a04" stroke-width="1.5" />
+                                        <path d="M15 25C25 15 45 15 55 35" fill="#476d3b" stroke="#1d0a04" stroke-width="1.5" opacity="0.9" />
+                                        <circle cx="35" cy="45" r="4" fill="#e0c158" stroke="#1d0a04" stroke-width="1" />
+                                    </svg>
+                                </div>
+
                             </div>
                         </div>
 
@@ -555,7 +617,7 @@
             <div class="w-full max-w-4xl bg-[#0f140e] p-4 rounded-2xl shadow-xl border border-[#1e2d1d] flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div class="text-xs text-slate-300">
                     <span class="text-[#a3d99b] font-bold">Escala física real del envase de 1 Litro:</span> 
-                    Frente <span class="text-white">10.5cm Ø</span> | Reverso <span class="text-white">11 x 18cm</span>.
+                    Frente <span class="text-white">10.5cm Ø</span> | Reverso <span class="text-white" id="lblScaleFooter">11 x 18cm</span>.
                 </div>
                 <div class="flex gap-2">
                     <button onclick="resetDefaults()" class="bg-transparent hover:bg-slate-800 text-slate-300 font-bold text-xs px-4 py-2 rounded-lg transition-all">
@@ -575,9 +637,91 @@
     <script>
         // Variables globales de estado
         let activeVariant = 'botanical'; // 'botanical' o 'minimalist'
+        let labelOrientation = 'vertical'; // 'vertical' o 'horizontal'
         let logoDisplayMode = 'vector';  // 'vector' o 'custom'
         let logoIntegrationMode = 'full'; // 'full' o 'center'
         let userUploadedLogoBase64 = '';
+        let frontDiameter = 10.5;
+        let backWidth = 11;
+        let backHeight = 18;
+
+        // Modificador de dimensiones en vivo
+        function updateDimensions() {
+            frontDiameter = parseFloat(document.getElementById('inputFrontDiameter').value) || 10.5;
+            backWidth = parseFloat(document.getElementById('inputBackWidth').value) || 11;
+            backHeight = parseFloat(document.getElementById('inputBackHeight').value) || 18;
+
+            // Frente
+            const frontContainer = document.getElementById('containerLogoFront');
+            frontContainer.style.width = frontDiameter + 'cm';
+            frontContainer.style.height = frontDiameter + 'cm';
+            frontContainer.style.minWidth = frontDiameter + 'cm';
+            frontContainer.style.minHeight = frontDiameter + 'cm';
+
+            // Reverso
+            const backContainer = document.getElementById('containerLabelBack');
+            backContainer.style.width = backWidth + 'cm';
+            backContainer.style.height = backHeight + 'cm';
+            backContainer.style.minWidth = backWidth + 'cm';
+            backContainer.style.minHeight = backHeight + 'cm';
+
+            // Actualizar etiquetas e indicadores
+            document.getElementById('lblFrontDiameterIndicator').textContent = frontDiameter + ' cm';
+            document.getElementById('lblBackWidthIndicator').textContent = backWidth + ' cm';
+            document.getElementById('lblBackHeightIndicator').textContent = backHeight + ' cm';
+            document.getElementById('lblScaleFooter').textContent = backWidth + ' x ' + backHeight + 'cm';
+
+            document.getElementById('lblFrontGuideline').textContent = '✂️ Guía de corte circular (Frente - ' + frontDiameter + 'cm)';
+            document.getElementById('lblBackGuideline').textContent = '✂️ Guía de corte trasera (' + backWidth + 'x' + backHeight + 'cm)';
+        }
+
+        // Cambiar la orientación de la etiqueta rectangular trasera
+        function setLabelOrientation(orientation) {
+            labelOrientation = orientation;
+            const btnVertical = document.getElementById('btnOrientVertical');
+            const btnHorizontal = document.getElementById('btnOrientHorizontal');
+            const contentWrapper = document.getElementById('backContentWrapper');
+            
+            const sectionLeft = document.getElementById('backSectionLeft');
+            const sectionRight = document.getElementById('backSectionRight');
+            const backDivisor = document.getElementById('backDivisor');
+
+            if (orientation === 'vertical') {
+                // Configurar botones
+                btnVertical.className = "p-2.5 text-xs font-bold rounded-lg text-center transition-all bg-[#243823] text-white border border-[#344d33] flex flex-col items-center gap-1";
+                btnHorizontal.className = "p-2.5 text-xs font-bold rounded-lg text-center transition-all bg-[#0d130d] text-slate-400 border border-[#152014] flex flex-col items-center gap-1";
+                
+                // Actualizar sliders a valores por defecto vertical
+                document.getElementById('inputBackWidth').value = 11;
+                document.getElementById('inputBackHeight').value = 18;
+
+                // Estructura de flujo vertical continuo (unificada)
+                contentWrapper.className = "z-10 flex flex-col justify-between h-full pt-4.5";
+                sectionLeft.className = "flex flex-col justify-between";
+                sectionRight.className = "flex flex-col justify-between";
+                backDivisor.style.display = 'flex';
+
+                showToast("Orientación Vertical (11x18cm) seleccionada.");
+            } else {
+                // Configurar botones
+                btnVertical.className = "p-2.5 text-xs font-bold rounded-lg text-center transition-all bg-[#0d130d] text-slate-400 border border-[#152014] flex flex-col items-center gap-1";
+                btnHorizontal.className = "p-2.5 text-xs font-bold rounded-lg text-center transition-all bg-[#243823] text-white border border-[#344d33] flex flex-col items-center gap-1";
+                
+                // Configurar sliders a valores por defecto horizontal
+                document.getElementById('inputBackWidth').value = 18;
+                document.getElementById('inputBackHeight').value = 11;
+
+                // Estructura de 2 columnas para aprovechar el ancho (perfecto para botellas anchas)
+                contentWrapper.className = "z-10 grid grid-cols-2 gap-4 h-full pt-1.5";
+                sectionLeft.className = "flex flex-col justify-between h-full";
+                sectionRight.className = "flex flex-col justify-between h-full border-l border-[#2d1a10]/20 pl-4";
+                backDivisor.style.display = 'none';
+
+                showToast("Orientación Horizontal (18x11cm) seleccionada.");
+            }
+            updateDimensions();
+            syncAndRender();
+        }
 
         // Cambiar entre variante de diseño: Artesanal Botánico y Minimalista Moderno
         function setDesignVariant(variant) {
@@ -596,7 +740,6 @@
             const backFlowerBR = document.getElementById('backFlowerBR');
             const backFrameOuter = document.getElementById('backFrameOuter');
             const backFrameInner = document.getElementById('backFrameInner');
-            const backDivisor = document.getElementById('backDivisor');
             
             if (variant === 'botanical') {
                 // Activar modo botánico
@@ -607,7 +750,7 @@
                 btnMinimalist.className = "p-2.5 text-xs font-bold rounded-lg text-center transition-all bg-[#0d130d] text-slate-400 border border-[#152014] flex flex-col items-center gap-1";
                 
                 circleLabelBg.className = "w-full h-full rounded-full p-1 border-4 border-[#2b1911]/15 overflow-hidden shadow-inner flex items-center justify-center relative parchment-botanical";
-                backLabelBg.className = "parchment-botanical w-full h-full p-4.5 flex flex-col justify-between text-[#2d1a10] relative border-4 border-[#2d1a10]/80 shadow-inner overflow-hidden transition-all";
+                backLabelBg.className = "parchment-botanical w-full h-full p-4.5 flex flex-col justify-between text-[#2d1a10] relative border-4 border-[#2d1a10]/80 shadow-inner overflow-hidden transition-all duration-300";
                 
                 // Mostrar decoraciones florales y marcos botánicos
                 backFlowerTL.classList.remove('hidden');
@@ -616,7 +759,6 @@
                 backFlowerBR.classList.remove('hidden');
                 backFrameOuter.classList.remove('hidden');
                 backFrameInner.classList.remove('hidden');
-                backDivisor.classList.remove('hidden');
                 
                 document.getElementById('lblTitleNutri').textContent = "DECLARACIÓN NUTRICIONAL";
                 document.getElementById('lblTitleBenefits').textContent = "❦ BENEFICIOS DEL KÉFIR ❦";
@@ -631,7 +773,7 @@
                 btnMinimalist.className = "p-2.5 text-xs font-bold rounded-lg text-center transition-all bg-[#243823] text-white border border-[#344d33] flex flex-col items-center gap-1";
                 
                 circleLabelBg.className = "w-full h-full rounded-full p-1 border border-[#111111]/30 overflow-hidden shadow-sm flex items-center justify-center relative parchment-minimalist";
-                backLabelBg.className = "parchment-minimalist w-full h-full p-4.5 flex flex-col justify-between text-[#111111] relative border-2 border-[#111111] shadow-sm overflow-hidden transition-all";
+                backLabelBg.className = "parchment-minimalist w-full h-full p-4.5 flex flex-col justify-between text-[#111111] relative border-2 border-[#111111] shadow-sm overflow-hidden transition-all duration-300";
                 
                 // Ocultar decoraciones florales clásicas
                 backFlowerTL.classList.add('hidden');
@@ -640,7 +782,6 @@
                 backFlowerBR.classList.add('hidden');
                 backFrameOuter.classList.add('hidden');
                 backFrameInner.classList.add('hidden');
-                backDivisor.classList.add('hidden');
                 
                 document.getElementById('lblTitleNutri').textContent = "INFORMACIÓN NUTRICIONAL";
                 document.getElementById('lblTitleBenefits').textContent = "BENEFICIOS";
@@ -807,11 +948,13 @@
             const ingredients = document.getElementById('inputIngredients').value;
             const motto = document.getElementById('inputMotto').value;
             const benefits = document.getElementById('inputBenefits').value;
+            const usage = document.getElementById('inputUsage').value;
             const conservation = document.getElementById('inputConservation').value;
 
             document.getElementById('lblIngredients').textContent = ingredients;
             document.getElementById('lblMotto').textContent = `"${motto}"`;
             document.getElementById('lblBenefits').textContent = benefits;
+            document.getElementById('lblUsage').textContent = usage;
             document.getElementById('lblConservation').textContent = conservation;
         }
 
@@ -838,7 +981,7 @@
             });
         }
 
-        // IMPRESIÓN FAILSAFE EN NUEVA PESTAÑA (Escala Real de 1 Litro)
+        // IMPRESIÓN FAILSAFE EN NUEVA PESTAÑA (Escala Real con Medidas Dinámicas)
         function printLabelsInNewTab() {
             showToast("Preparando hoja de etiquetas para impresión...");
 
@@ -899,7 +1042,7 @@
                 '<body class="' + (activeVariant === 'botanical' ? 'botanical-mode' : 'minimalist-mode') + ' flex flex-col items-center justify-center min-h-screen gap-10">',
                 '    <div class="no-print-btn bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center max-w-lg mb-4 text-sm text-emerald-800">',
                 '        <p class="font-bold">✨ ¡Plantilla Lista para Imprimir! ✨</p>',
-                '        <p class="text-xs mt-1">Recuerda marcar la casilla de <b>"Gráficos de Fondo"</b> y configurar la escala al <b>100% (Real)</b> en las opciones del navegador para asegurar la medida de 1 litro.</p>',
+                '        <p class="text-xs mt-1">Recuerda marcar la casilla de <b>"Gráficos de Fondo"</b> y configurar la escala al <b>100% (Real)</b> en las opciones del navegador para asegurar la medida configurada.</p>',
                 '        <button onclick="window.print()" class="mt-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-all">',
                 '            🖨️ Imprimir Ahora',
                 '        </button>',
@@ -912,6 +1055,16 @@
                 '        const userImg64 = "' + userUploadedLogoBase64 + '";',
                 '        const displayMode = "' + logoDisplayMode + '";',
                 '        const integrationMode = "' + logoIntegrationMode + '";',
+                '        const orientMode = "' + labelOrientation + '";',
+                
+                '        if (orientMode === "horizontal") {',
+                '            const wrapper = document.querySelector("#backContentWrapper");',
+                '            wrapper.className = "z-10 grid grid-cols-2 gap-4 h-full pt-1.5";',
+                '            document.querySelector("#backSectionLeft").className = "flex flex-col justify-between h-full";',
+                '            document.querySelector("#backSectionRight").className = "flex flex-col justify-between h-full border-l border-[#2d1a10]/20 pl-4";',
+                '            document.querySelector("#backDivisor").style.display = "none";',
+                '        }',
+                
                 '        if (displayMode === "custom" && userImg64) {',
                 '            const wrap = document.querySelector("#wrapperUserLogo");',
                 '            const img = document.querySelector("#imgUserLogo");',
@@ -960,13 +1113,21 @@
             document.getElementById('inputIngredients').value = "Agua filtrada, cultivo de tibicos, azúcar de caña integral (consumida en la fermentación), flor de Jamaica deshidratada e infusión de menta fresca.";
             document.getElementById('inputMotto').value = "Abraza tu bienestar desde adentro";
             document.getElementById('inputBenefits').value = "Una bebida viva, elaborada artesanalmente con fermentación natural. Aporta probióticos que cuidan de tu digestión de forma refrescante y 100% natural. ¡Siente la ligereza en cada trago!";
-            document.getElementById('inputConservation').value = "Manténgase siempre en refrigeración (2°C a 6°C). No agitar antes de abrir.";
+            document.getElementById('inputUsage').value = "Disfruta bien frío. Ideal por las mañanas en ayunas o para acompañar tus comidas diarias.";
+            document.getElementById('inputConservation').value = "Manténgase siempre en refrigeración (2°C a 6°C) para conservar sus propiedades vivas. No agitar antes de abrir.";
 
             userUploadedLogoBase64 = '';
             document.getElementById('logoFileInput').value = '';
             
+            // Medidas por defecto
+            document.getElementById('inputFrontDiameter').value = 10.5;
+            document.getElementById('inputBackWidth').value = 11;
+            document.getElementById('inputBackHeight').value = 18;
+            
             setDesignVariant('botanical');
+            setLabelOrientation('vertical');
             setLogoDisplay('vector');
+            updateDimensions();
             syncAndRender();
         }
 
@@ -992,6 +1153,7 @@
         }
 
         window.onload = function() {
+            updateDimensions();
             syncAndRender();
         }
     </script>
